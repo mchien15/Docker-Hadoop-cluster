@@ -50,7 +50,12 @@ if [ "$MULTIHOMED_NETWORK" = "1" ]; then
     addProperty /etc/hadoop/hdfs-site.xml dfs.client.use.datanode.hostname true
     addProperty /etc/hadoop/hdfs-site.xml dfs.datanode.use.datanode.hostname true
 
+    addProperty /etc/hadoop/hdfs-site.xml dfs.datanode.data.dir /hadoop/dfs/data
+
     # YARN
+    updateProperty /etc/hadoop/yarn-site.xml yarn.resourcemanager.hostname 10.0.50.139
+    updateProperty /etc/hadoop/yarn-site.xml yarn.resourcemanager.address 10.0.50.139:8032
+    
     addProperty /etc/hadoop/yarn-site.xml yarn.resourcemanager.bind-host 0.0.0.0
     addProperty /etc/hadoop/yarn-site.xml yarn.nodemanager.bind-host 0.0.0.0
     addProperty /etc/hadoop/yarn-site.xml yarn.nodemanager.bind-host 0.0.0.0
@@ -58,6 +63,9 @@ if [ "$MULTIHOMED_NETWORK" = "1" ]; then
 
     # MAPRED
     addProperty /etc/hadoop/mapred-site.xml yarn.nodemanager.bind-host 0.0.0.0
+
+    # CORE
+    updateProperty /etc/hadoop/core-site.xml fs.defaultFS hdfs://10.0.50.139:9000
 fi
 
 if [ -n "$GANGLIA_HOST" ]; then
