@@ -1,7 +1,3 @@
-# Hi there, I'm [Mrugank][linkedin] 👋 
-
-[![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UC_o2rxaj5w_CAl5y_V1nqNg?logo=youtube&logoColor=red&style=for-the-badge)][youtube] [![My Website](https://img.shields.io/website?style=for-the-badge&url=https%3A%2F%2Fmrayonline.web.app%2F)][website] [![LinkedIn](https://img.shields.io/website?color=blue&label=linkedin&logo=linkedin&logoColor=blue&style=for-the-badge&up_color=green&up_message=mrugank%20ray&url=https%3A%2F%2Fmrayonline.web.app%2F)][linkedin] [![Buy me coffee](https://img.shields.io/website?label=Buy%20Me%20coffee&style=for-the-badge&up_color=orange&up_message=mrugank%20ray&url=https%3A%2F%2Fwww.buymeacoffee.com%2Fmrugankray)][buy_me_coffee]
-
 ## Table of Contents
 1. [Overview](#overview)
 2. [Applications](#applications)
@@ -31,10 +27,6 @@
 26. [Build Custom Docker Images](#build-custom-docker-images)
 27. [Manage resources](#manage-resources)
 28. [Dependencies](#dependencies)
-
-## Overview
-Today, there are many projects available that were created to deploy a Spark or Hadoop cluster, but they are either ineffective or resource-intensive, causing the system to freeze. 
-This repository is created to simplify the deployment of these clusters on a local machine using Docker containers.
 
 ## Applications
 This project will start a docker cluster which gives access to the following frameworks/technologies.
@@ -517,8 +509,3 @@ I recommend using a workstation with at least 4 hyper-threaded cores & 8GB RAM t
 - [Docker](https://docs.docker.com/):
     1. Install Docker on ubuntu: https://docs.docker.com/engine/install/ubuntu/
     2. Install Docker on windows: https://docs.docker.com/desktop/install/windows-install/
-
-[website]: https://mrayonline.web.app
-[youtube]: https://www.youtube.com/@mrugankray7623
-[linkedin]: https://in.linkedin.com/in/mrugank-ray-543886149
-[buy_me_coffee]: https://www.buymeacoffee.com/mrugankray
