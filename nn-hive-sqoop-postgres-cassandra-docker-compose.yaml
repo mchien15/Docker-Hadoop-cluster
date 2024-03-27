@@ -3,10 +3,10 @@ version: "3"
 services:
 # Setting Up HDFS & YARN #
   namenode:
-    # image: mrugankray/namenode-spark-airflow-flume-zepplin:1.1
+    image: mrugankray/namenode-spark-airflow-flume-zepplin:1.1
     build: 
-      context: ./docker_image_conf/namenode
-      dockerfile: Dockerfile
+      # context: ./docker_image_conf/namenode
+      # dockerfile: Dockerfile
     container_name: namenode
     restart: always
     ports:
@@ -40,10 +40,10 @@ services:
       - ./hadoop.env
 
   datanode:
-    # image: mrugankray/datanode-python:1.0
-    build: 
-      context: ./docker_image_conf/datanode
-      dockerfile: Dockerfile
+    image: mrugankray/datanode-python:1.0
+    # build: 
+    #   context: ./docker_image_conf/datanode
+    #   dockerfile: Dockerfile
     container_name: datanode
     restart: always
     volumes:
