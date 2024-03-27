@@ -4,7 +4,7 @@ services:
 # Setting Up HDFS & YARN #
   namenode:
     image: mrugankray/namenode-spark-airflow-flume-zepplin:1.1
-    build: 
+    # build: 
       # context: ./docker_image_conf/namenode
       # dockerfile: Dockerfile
     container_name: namenode
