@@ -39,12 +39,12 @@ services:
     env_file:
       - ./hadoop.env
 
-  datanode:
+  datanode1:
     image: mrugankray/datanode-python:1.0
     # build: 
     #   context: ./docker_image_conf/datanode
     #   dockerfile: Dockerfile
-    container_name: datanode
+    container_name: datanode1
     restart: always
     volumes:
       - hadoop_datanode:/hadoop/dfs/data
@@ -70,7 +70,7 @@ services:
       - ./configs/resourcemanager_bashrc.txt:/root/.bashrc
       - ~/.ssh:/root/.ssh
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864"
     ports:
       - "8088:8088"
     env_file:
@@ -85,7 +85,7 @@ services:
       - ./configs/nodemanager_bashrc.txt:/root/.bashrc
       - ~/.ssh:/root/.ssh
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 resourcemanager:8088"
     ports:
       - "8042:8042"
       - "19888:19888" # to access job history
@@ -97,7 +97,7 @@ services:
     container_name: historyserver
     restart: always
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 resourcemanager:8088"
     ports:
       - "8188:8188"
     volumes:
@@ -136,7 +136,7 @@ services:
       - ./hadoop.env
     command: /opt/hive/bin/hive --service metastore
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 hive-metastore-postgresql:5432"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 hive-metastore-postgresql:5432"
     ports:
       - "9083:9083"
     depends_on:
@@ -156,7 +156,7 @@ services:
     env_file:
       - ./hadoop.env
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 hive-metastore-postgresql:5432 hive-metastore:9083 hive-server:10000 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 hive-metastore-postgresql:5432 hive-metastore:9083 hive-server:10000 resourcemanager:8088"
       POSTGRES_USER: hue
       POSTGRES_PASSWORD: hue
       POSTGRES_DB: hue
@@ -165,7 +165,7 @@ services:
     image: gethue/hue:4.6.0
     container_name: hue
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 hive-metastore-postgresql:5432 hive-metastore:9083 hive-server:10000 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 hive-metastore-postgresql:5432 hive-metastore:9083 hive-server:10000 resourcemanager:8088"
     ports:
       - "8888:8888"
     env_file:
@@ -228,7 +228,7 @@ volumes:
   hadoop_namenode_spark:
   hadoop_namenode_zeppelin:
   hadoop_namenode_flume:
-  hadoop_datanode:
+  hadoop_datanode1:
   hadoop_datanode_conda:
   hadoop_resourcemanager_conda:
   hadoop_nodemanager_conda:
