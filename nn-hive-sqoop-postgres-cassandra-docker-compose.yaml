@@ -300,8 +300,7 @@ services:
 
 networks:
   ivirse_hadoop_network:
-    driver: bridge
-    external: true
+    driver: overlay
 
 volumes:
   hadoop_namenode:
