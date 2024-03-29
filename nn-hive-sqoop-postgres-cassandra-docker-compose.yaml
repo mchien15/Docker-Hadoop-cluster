@@ -65,6 +65,54 @@ services:
     env_file:
       - ./hadoop.env
 
+  datanode2:
+    image: mrugankray/datanode-python:1.0
+    # build: 
+    #   context: ./docker_image_conf/datanode
+    #   dockerfile: Dockerfile
+    container_name: datanode2
+    networks:
+      - ivirse_hadoop_network
+    restart: always
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+      - hadoop_datanode_conda:/root/anaconda
+      - ./configs/datanode_bashrc.txt:/root/.bashrc
+      - ~/.ssh:/root/.ssh
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+      CORE_CONF_fs_defaultFS: "hdfs://namenode:9000"
+    ports:
+      - "9865:9864"
+    env_file:
+      - ./hadoop.env
+
+  datanode3:
+    image: mrugankray/datanode-python:1.0
+    # build: 
+    #   context: ./docker_image_conf/datanode
+    #   dockerfile: Dockerfile
+    container_name: datanode3
+    networks:
+      - ivirse_hadoop_network
+    restart: always
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+      - hadoop_datanode_conda:/root/anaconda
+      - ./configs/datanode_bashrc.txt:/root/.bashrc
+      - ~/.ssh:/root/.ssh
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+      CORE_CONF_fs_defaultFS: "hdfs://namenode:9000"
+    ports:
+      - "9866:9864"
+    env_file:
+      - ./hadoop.env
+
   resourcemanager:
     image: mrugankray/resourcemanager-python:1.0
     container_name: resourcemanager
@@ -76,7 +124,7 @@ services:
       - ./configs/resourcemanager_bashrc.txt:/root/.bashrc
       - ~/.ssh:/root/.ssh
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864"
     ports:
       - "8088:8088"
     env_file:
@@ -93,7 +141,7 @@ services:
       - ./configs/nodemanager_bashrc.txt:/root/.bashrc
       - ~/.ssh:/root/.ssh
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 resourcemanager:8088 datanode2:9864 datanode3:9864"
     ports:
       - "8042:8042"
       - "19888:19888" # to access job history
@@ -107,7 +155,7 @@ services:
       - ivirse_hadoop_network
     restart: always
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 resourcemanager:8088 datanode2:9864 datanode3:9864 nodemanager:8042"
     ports:
       - "8188:8188"
     volumes:
@@ -125,6 +173,8 @@ services:
     depends_on:
       - namenode
       - datanode1
+      - datanode2
+      - datanode3
       - hive-metastore
     env_file:
       - ./hadoop.env
@@ -150,7 +200,7 @@ services:
       - ./hadoop.env
     command: /opt/hive/bin/hive --service metastore
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 hive-metastore-postgresql:5432"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 hive-metastore-postgresql:5432 datanode2:9864 datanode3:9864 hive-server:10000 resourcemanager:8088"
     ports:
       - "9083:9083"
     depends_on:
@@ -174,7 +224,7 @@ services:
     env_file:
       - ./hadoop.env
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 hive-metastore-postgresql:5432 hive-metastore:9083 hive-server:10000 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 hive-metastore-postgresql:5432 hive-metastore:9083 hive-server:10000 resourcemanager:8088 datanode2:9864 datanode3:9864"
       POSTGRES_USER: hue
       POSTGRES_PASSWORD: hue
       POSTGRES_DB: hue
@@ -185,7 +235,7 @@ services:
     networks:
       - ivirse_hadoop_network
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 hive-metastore-postgresql:5432 hive-metastore:9083 hive-server:10000 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 hive-metastore-postgresql:5432 hive-metastore:9083 hive-server:10000 resourcemanager:8088 datanode2:9864 datanode3:9864"
     ports:
       - "8888:8888"
     env_file:
