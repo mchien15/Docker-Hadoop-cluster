@@ -35,6 +35,13 @@ services:
       - hadoop_namenode_flume:/opt/flume
       - ~/.ssh:/root/.ssh
       - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      mode: global # Required by Docker Swarm to make published ports work with other services
+      endpoint_mode: dnsrr # Required to prevent java.net.ConnectException
+      placement:
+        # Set node labels using `docker node update --label-add role=master <NODE ID>` from swarm manager
+        constraints:
+          - node.labels.role==master
     environment:
       - CLUSTER_NAME=hadoop-learning
       - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
