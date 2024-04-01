@@ -1,5 +1,5 @@
 # FROM bde2020/hive:2.3.2-postgresql-metastore
-FROM chienlm15/hive:lastest
+FROM chienlm15/hive:latest
 
 # set the env variables
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/

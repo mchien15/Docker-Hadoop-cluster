@@ -1,5 +1,5 @@
 # FROM bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
-FROM chienlm15/hadoop-resourcemanager:lastest
+FROM chienlm15/hadoop-resourcemanager:latest
 
 # set the env variables
 ENV PATH=/root/anaconda/bin:$PATH

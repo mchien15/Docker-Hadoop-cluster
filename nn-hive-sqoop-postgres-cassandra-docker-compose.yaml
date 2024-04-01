@@ -166,7 +166,7 @@ services:
       - ./hadoop.env
 
   historyserver:
-    image: chienlm15/hadoop-historyserver:lastest
+    image: chienlm15/hadoop-historyserver:latest
     container_name: historyserver
     # networks:
     #   - ivirse_hadoop_network
@@ -211,7 +211,7 @@ services:
 
   hive-metastore:
     # image: bde2020/hive:2.3.2-postgresql-metastore
-    image: chienlm15/hive:lastest
+    image: chienlm15/hive:latest
     container_name: hive-metastore
     # networks:
     #   - ivirse_hadoop_network
