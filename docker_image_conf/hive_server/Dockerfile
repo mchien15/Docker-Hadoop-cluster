@@ -1,7 +1,5 @@
-FROM bde2020/hive:2.3.2-postgresql-metastore
-
-LABEL maintainer="mrugankray@gmail.com"
-LABEL description="container with hive-server & sqoop"
+# FROM bde2020/hive:2.3.2-postgresql-metastore
+FROM chienlm15/hive:lastest
 
 # set the env variables
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
