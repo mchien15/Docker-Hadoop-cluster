@@ -8,8 +8,8 @@ services:
       # context: ./docker_image_conf/namenode
       # dockerfile: Dockerfile
     container_name: namenode
-    networks:
-      - ivirse_hadoop_network
+    # networks:
+    #   - ivirse_hadoop_network
     restart: always
     ports:
       - 9870:9870
@@ -35,13 +35,13 @@ services:
       - hadoop_namenode_flume:/opt/flume
       - ~/.ssh:/root/.ssh
       - /var/run/docker.sock:/var/run/docker.sock
-    deploy:
-      mode: global # Required by Docker Swarm to make published ports work with other services
-      # endpoint_mode: dnsrr # Required to prevent java.net.ConnectException
-      placement:
-        # Set node labels using `docker node update --label-add role=master <NODE ID>` from swarm manager
-        constraints:
-          - node.labels.role==master
+    # deploy:
+    #   mode: global # Required by Docker Swarm to make published ports work with other services
+    #   # endpoint_mode: dnsrr # Required to prevent java.net.ConnectException
+    #   placement:
+    #     # Set node labels using `docker node update --label-add role=master <NODE ID>` from swarm manager
+    #     constraints:
+    #       - node.labels.role==master
     environment:
       - CLUSTER_NAME=hadoop-learning
       - CORE_CONF_fs_defaultFS=hdfs://10.0.50.139:9000
@@ -54,8 +54,8 @@ services:
     #   context: ./docker_image_conf/datanode
     #   dockerfile: Dockerfile
     container_name: datanode
-    networks:
-      - ivirse_hadoop_network
+    # networks:
+    #   - ivirse_hadoop_network
     restart: always
     volumes:
       - hadoop_datanode:/hadoop/dfs/data
@@ -63,11 +63,11 @@ services:
       - ./configs/datanode_bashrc.txt:/root/.bashrc
       - ~/.ssh:/root/.ssh
       - /var/run/docker.sock:/var/run/docker.sock
-    deploy:
-      placement:
-        constraints:
-          - node.labels.role==worker
-      replicas: 3
+    # deploy:
+    #   placement:
+    #     constraints:
+    #       - node.labels.role==worker
+    #   replicas: 3
     environment:
       SERVICE_PRECONDITION: "10.0.50.139:9870"
       CORE_CONF_fs_defaultFS: "hdfs://10.0.50.139:9000"
@@ -127,8 +127,8 @@ services:
   resourcemanager:
     image: mrugankray/resourcemanager-python:1.0
     container_name: resourcemanager
-    networks:
-      - ivirse_hadoop_network
+    # networks:
+    #   - ivirse_hadoop_network
     restart: always
     volumes:
       - hadoop_resourcemanager_conda:/root/anaconda
@@ -144,8 +144,8 @@ services:
   nodemanager:
     image: mrugankray/nodemanager-python:1.0
     container_name: nodemanager
-    networks:
-      - ivirse_hadoop_network
+    # networks:
+    #   - ivirse_hadoop_network
     restart: always
     volumes:
       - hadoop_nodemanager_conda:/root/anaconda
@@ -162,8 +162,8 @@ services:
   historyserver:
     image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
     container_name: historyserver
-    networks:
-      - ivirse_hadoop_network
+    # networks:
+    #   - ivirse_hadoop_network
     restart: always
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 resourcemanager:8088 nodemanager:8042"
@@ -179,8 +179,8 @@ services:
   hive-server:
     image: mrugankray/hive-server-sqoop:1.0
     container_name: hive-server
-    networks:
-      - ivirse_hadoop_network
+    # networks:
+    #   - ivirse_hadoop_network
     depends_on:
       - namenode
       - datanode
@@ -203,8 +203,8 @@ services:
   hive-metastore:
     image: bde2020/hive:2.3.2-postgresql-metastore
     container_name: hive-metastore
-    networks:
-      - ivirse_hadoop_network
+    # networks:
+    #   - ivirse_hadoop_network
     env_file:
       - ./hadoop.env
     command: /opt/hive/bin/hive --service metastore
@@ -218,15 +218,15 @@ services:
   hive-metastore-postgresql:
     image: bde2020/hive-metastore-postgresql:2.3.0
     container_name: hive-metastore-postgresql
-    networks:
-      - ivirse_hadoop_network
+    # networks:
+    #   - ivirse_hadoop_network
 
 # Hue #
   huedb:
     image: postgres:15.1-alpine3.17
     container_name: huedb
-    networks:
-      - ivirse_hadoop_network
+    # networks:
+    #   - ivirse_hadoop_network
     volumes:
       - hue_pg_data:/var/lib/postgresl/data/
       - ~/.ssh:/root/.ssh
@@ -241,8 +241,8 @@ services:
   hue:
     image: gethue/hue:4.6.0
     container_name: hue
-    networks:
-      - ivirse_hadoop_network
+    # networks:
+    #   - ivirse_hadoop_network
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 hive-metastore-postgresql:5432 hive-metastore:9083 hive-server:10000 resourcemanager:8088"
     ports:
@@ -259,8 +259,8 @@ services:
   external_postgres_db:
     image: postgres:15.1-alpine3.17
     container_name: external_postgres_db
-    networks:
-      - ivirse_hadoop_network
+    # networks:
+    #   - ivirse_hadoop_network
     volumes:
       - external_postgres_db_data:/var/lib/postgresl/data/
       - ~/.ssh:/root/.ssh
@@ -274,8 +274,8 @@ services:
   external_pgadmin:
     image: dpage/pgadmin4:6.18
     container_name: external_pgadmin
-    networks:
-      - ivirse_hadoop_network
+    # networks:
+    #   - ivirse_hadoop_network
     ports:
       - "5000:80"
     environment:
@@ -288,8 +288,8 @@ services:
   cassandra:
     image: cassandra:4.1
     container_name: cassandra
-    networks:
-      - ivirse_hadoop_network
+    # networks:
+    #   - ivirse_hadoop_network
     ports:
       - "9042:9042"
     environment:
@@ -307,9 +307,9 @@ services:
       timeout: 10s
       retries: 10
 
-networks:
-  ivirse_hadoop_network:
-    driver: overlay
+# networks:
+#   ivirse_hadoop_network:
+#     driver: overlay
 
 volumes:
   hadoop_namenode:
