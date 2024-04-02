@@ -71,7 +71,10 @@ COPY ./start_services.sh /
 # install nano
 # RUN apt-get update && apt-get install nano -y
 
+ENTRYPOINT ["/entrypoint.sh"]
+# CMD ["/run.sh"]
+
 # start namenode, spark, airflow, zepplin
 RUN ["chmod", "+x", "/start_services.sh"]
 
-ENTRYPOINT ["/start_services.sh"]
+CMD ["/start_services.sh"]
