@@ -74,4 +74,4 @@ COPY ./start_services.sh /
 # start namenode, spark, airflow, zepplin
 RUN ["chmod", "+x", "/start_services.sh"]
 
-CMD ["/bin/sh", "-c", "/start_services.sh"]
+ENTRYPOINT ["/start_services.sh"]
