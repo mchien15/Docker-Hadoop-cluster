@@ -72,4 +72,4 @@ COPY ./start_services.sh /
 # RUN apt-get update && apt-get install nano -y
 
 # start namenode, spark, airflow, zepplin
-CMD ["/start_services.sh"]
+RUN ["chmod", "+x", "/start_services.sh"]
